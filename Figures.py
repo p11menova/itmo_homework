@@ -6,11 +6,19 @@ class Point:
         self.x = int(x)
         self.y = int(y)
 
-    def make_copy(self):
-        return self.x, self.y
+    def __copy__(self):
+        return Point(self.x, self.y)
 
-    def find_distanse(self, x1: int, y1: int) -> float:
-        return sqrt((x1 - self.x)**2 + (y1 - self.y)**2)
+    def __eq__(self, other):
+        if isinstance(other, Point):
+            return self.x == other.x and self.y == other.y
+        return False
+
+    def __str__(self):
+        return f'{self.x}, {self.y}'
+
+    def find_distance(self, other) -> float:
+        return isinstance(other, Point) and sqrt((other.x - self.x) ** 2 + (other.y - self.y) ** 2)
 
 
 class Triangle:
@@ -20,9 +28,9 @@ class Triangle:
         self.point3 = point3
 
         # стороны
-        self.a = self.point1.find_distanse(self.point2.x, self.point2.y)
-        self.b = self.point2.find_distanse(self.point3.x, self.point3.y)
-        self.c = self.point3.find_distanse(self.point1.x, self.point1.y)
+        self.a = self.point1.find_distance(self.point2)
+        self.b = self.point2.find_distance(self.point3)
+        self.c = self.point3.find_distance(self.point1)
 
     def find_perimeter(self) -> float:
         return self.a + self.b + self.c
@@ -38,7 +46,7 @@ class Circle:
         self.oy = center_point.y
         self.R = R
 
-    def fing_lenght(self) -> float:
+    def find_lenght(self) -> float:
         return 2 * pi * self.R
 
     def find_square(self) -> float:
@@ -48,6 +56,6 @@ class Circle:
         return ((point.x - self.ox) ** 2 + (point.y - self.oy)) ** 2 <= self.R**2
 
     def is_intersection(self, center: Point, r):
-        s = self.center_point.find_distanse(center.x, center.y)
+        s = self.center_point.find_distance(center)
         return abs(self.R - r) < s < (self.R + r)
 
