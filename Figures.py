@@ -17,8 +17,45 @@ class Point:
     def __str__(self):
         return f'{self.x}, {self.y}'
 
+    def __mul__(self, n: int):
+        return Point(x=self.x * n, y=self.y * n)
+
     def find_distance(self, other) -> float:
         return isinstance(other, Point) and sqrt((other.x - self.x) ** 2 + (other.y - self.y) ** 2)
+
+
+class Vector:
+    def __init__(self, start_point: Point, finish_point: Point):
+        self.s_point = start_point
+        self.f_point = finish_point
+
+    def __str__(self):
+        return f'{str(self.s_point)} -> {str(self.f_point)}'
+
+    def __copy__(self):
+        return Vector(self.s_point, self.f_point)
+
+    def __add__(self, other):
+        if isinstance(other, Vector) and other.s_point == self.f_point:
+            return Vector(start_point=self.s_point, finish_point=other.f_point)
+        return 0
+
+    def __sub__(self, other):
+        if isinstance(other, Vector):
+            othervector = Vector(start_point=other.s_point,
+                                 finish_point=Point(other.f_point.x * -1, other.f_point.y))
+            return self + othervector
+        return 0
+
+    def __mul__(self, n: int):
+        return Vector(start_point=self.s_point * n, finish_point=self.f_point * n)
+
+    def length(self):
+        return sqrt((self.f_point.x - self.s_point.x) ** 2 + (self.f_point.y - self.s_point.y) ** 2)
+
+    def scalar_mul(self, other, cosine):
+        if isinstance(other, Vector):
+            return self.length() * other.length() * cosine
 
 
 class Triangle:

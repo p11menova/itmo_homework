@@ -85,4 +85,13 @@ def meter():
             print(len(set(DISTANCES)), file=f1)
             print('\n'.join([str(round(i, 12)) for i in sorted(list(set(DISTANCES)))]), file=f1)
 
-triangle_n_point()
+def vectors():
+    v = Vector(start_point=Point(0, 0), finish_point=Point(3, 3))
+    v2 = Vector(start_point=Point(3, 3), finish_point=Point(2, 2))
+
+    print(v + v2)
+    print(v - v2)
+    print(v * 4)
+    print(v.scalar_mul(other=v2, cosine=1))
+
+vectors()
