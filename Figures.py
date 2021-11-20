@@ -2,19 +2,19 @@ from math import sqrt, pi
 
 
 class Point:
-    def __init__(self, x, y):
-        self.x = int(x)
-        self.y = int(y)
+    def __init__(self, x: float, y: float):
+        self.x = x
+        self.y = y
 
     def __copy__(self):
         return Point(self.x, self.y)
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if isinstance(other, Point):
             return self.x == other.x and self.y == other.y
         return False
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.x}, {self.y}'
 
     def __mul__(self, n: int):
@@ -29,7 +29,7 @@ class Vector:
         self.s_point = start_point
         self.f_point = finish_point
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{str(self.s_point)} -> {str(self.f_point)}'
 
     def __copy__(self):
@@ -42,18 +42,18 @@ class Vector:
 
     def __sub__(self, other):
         if isinstance(other, Vector):
-            othervector = Vector(start_point=other.s_point,
+            other_vector = Vector(start_point=other.s_point,
                                  finish_point=Point(other.f_point.x * -1, other.f_point.y))
-            return self + othervector
+            return self + other_vector
         return 0
 
     def __mul__(self, n: int):
         return Vector(start_point=self.s_point * n, finish_point=self.f_point * n)
 
-    def length(self):
+    def length(self) -> float:
         return sqrt((self.f_point.x - self.s_point.x) ** 2 + (self.f_point.y - self.s_point.y) ** 2)
 
-    def scalar_mul(self, other, cosine):
+    def scalar_mul(self, other, cosine) -> float:
         if isinstance(other, Vector):
             return self.length() * other.length() * cosine
 
@@ -77,7 +77,7 @@ class Triangle:
 
 
 class Circle:
-    def __init__(self, center_point: Point, R):
+    def __init__(self, center_point: Point, R: float):
         self.center_point = center_point
         self.ox = center_point.x
         self.oy = center_point.y
@@ -92,7 +92,7 @@ class Circle:
     def is_inside_circle(self, point: Point) -> bool:
         return ((point.x - self.ox) ** 2 + (point.y - self.oy)) ** 2 <= self.R**2
 
-    def is_intersection(self, center: Point, r):
+    def is_intersection(self, center: Point, r: float):
         s = self.center_point.find_distance(center)
         return abs(self.R - r) < s < (self.R + r)
 
