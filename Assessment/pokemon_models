@@ -1,0 +1,21 @@
+class BasePokemon:
+    def __init__(self, name):
+        self.__name = name
+
+    def __str__(self):
+        return f'name: {self.__name}'
+
+
+class Pokemon(BasePokemon):
+    def __init__(self, id, name, height, weight):
+        BasePokemon.__init__(self, name)
+
+        self.__id = id
+        self.__name = name
+        self.__height = height
+        self.__weight = weight
+
+    def __str__(self):
+        return f'id: {self.__id}, name: {self.__name}, ' \
+            f'height: {self.__height}, weight: {self.__weight}'
+
