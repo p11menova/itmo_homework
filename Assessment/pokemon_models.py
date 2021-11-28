@@ -36,19 +36,27 @@ class Pokemon(BasePokemon):
         return self.__weight
 
 
+class PokeError(Exception):
+    pass
+
+
 class PokeAPI:
     def get_pokemon(self, key: int or str) -> str:
-        try:
-            if isinstance(key, int):
-                return list(filter(lambda x: x.get_id() == key, POKEMONS))[0]
-            elif isinstance(key, str):
-                return list(filter(lambda x: x.get_name() == key, POKEMONS))[0]
-        except IndexError:
-            return 'такого покемона нет в списке!'
+        if isinstance(key, int):
+            return list(filter(lambda x: x.get_id() == key, POKEMONS))[0]
+        elif isinstance(key, str):
+            return list(filter(lambda x: x.get_name() == key, POKEMONS))[0]
+
+        raise PokeError('такого покемона нет в списке!')
 
     def get_all(self, get_full: bool):
         if not get_full:
+            if not BASE_POKEMONS:
+                raise PokeError('список покемонов пуст!')
             return '\n'.join([str(j) for j in BASE_POKEMONS])
+
+        if not POKEMONS:
+            raise PokeError('список покемонов пуст!')
 
         cur_num = 1
         pokems_num = len(POKEMONS)

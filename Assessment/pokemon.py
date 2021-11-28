@@ -25,6 +25,7 @@ def make_pokemons(content: List) -> None:
                                 height=data['height'],
                                 weight=data['weight']))
 
+
 def main():
     #task 1
     make_pokemons(get_content())
